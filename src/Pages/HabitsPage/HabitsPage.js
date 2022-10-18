@@ -7,24 +7,32 @@ export default function HabitsPage(params) {
         <>
             <Header />
 
-            <StyledTopo>
-                <h1>Meus hábitos</h1>
-                <button>+</button>
-            </StyledTopo>
+            <StyledMain>
+                <div className="topo">
+                    <h1>Meus hábitos</h1>
+                    <button>+</button>
+                </div>
 
-            <StyledContainer>
-                <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
-            </StyledContainer>
+                <div className="container">
+                    <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                </div>
 
+            </StyledMain>
             <Footer />
         </>
     )
 };
 
-const StyledTopo = styled.div`
-width: 100%;
+
+const StyledMain = styled.main`
 
 margin-top: 86px;
+margin-left: 20px;
+margin-right: 20px;
+
+.topo{
+width: 100%;
+margin-bottom: 28px;
 
 display: flex;
 justify-content: space-between;
@@ -62,10 +70,11 @@ text-align: center;
 color: #ffffff;   
 
 }
+}
 
-`
 
-const StyledContainer = styled.div`
+
+.container{
 width: 100%;
 
 display: flex;
@@ -82,5 +91,7 @@ color: #666666;
 
 
 }
+}
 
 `
+

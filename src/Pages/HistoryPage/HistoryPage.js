@@ -18,15 +18,17 @@ export default function HistoryPage(params) {
 
 const StyledTopo = styled.div`
 
-width: 100%;
 
-margin-top: 80px;
+
+margin-top: 86px;
+margin-left: 20px;
+margin-right: 20px;
 
 display: flex;
 flex-direction: column;
 
 h1{
-margin-top: 28px;
+
 margin-bottom: 0px;
 font-family: 'Lexend Deca', sans-serif;
 font-style: normal;

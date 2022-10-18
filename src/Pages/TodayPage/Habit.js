@@ -16,20 +16,25 @@ export default function Habit(params) {
 
 
 const StyledHabit = styled.div`
-    width: 340px;
+    box-sizing: border-box;
+    
+    width: 94%;
     height: 94px;
 
-    margin: 28px;
-    
+    margin: 10px;
+    padding-left: 15px;
+
     background: #FFFFFF;
     border-radius: 5px;
 
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
 
 
     .infos{
+
+        height: 80px;
         display: flex;
         flex-direction: column;
 
@@ -64,6 +69,7 @@ const StyledHabit = styled.div`
         height: 70px;
 
         margin: 14px;
+        
 
         background-color: lightgreen;
     }

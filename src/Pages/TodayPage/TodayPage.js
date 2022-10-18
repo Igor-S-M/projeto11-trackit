@@ -16,10 +16,10 @@ export default function TodayPage() {
                 </div>
 
                 <div className="container-habitos">
-                    <Habit/>
-                    <Habit/>
-                    <Habit/>
-                    
+                    <Habit />
+                    <Habit />
+                    <Habit />
+
                 </div>
             </main>
 
@@ -35,18 +35,18 @@ background-color: lightcyan;
 
 main{
     margin: 70px 0px;
-
-    width: 100%;
+    min-height: 570px;
 
     .container-info-gerais{
         display: flex;
         flex-direction: column;
 
-        margin-top: 98px;
+        
         margin-left: 16px;
         
         h1{
             margin: 0px;
+            margin-top: 28px;
             height: 29px;
 
                     
@@ -77,7 +77,9 @@ main{
         display: flex;
         flex-direction: column;
         align-items: center;
-    }
+
+        }
+
 }
 
 `

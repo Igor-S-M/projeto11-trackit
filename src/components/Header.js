@@ -26,6 +26,8 @@ const StyledHeader = styled.header`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     
     p{
+    margin-left: 18px;
+    
     width: 97px;
     height: 49px;
 
@@ -41,6 +43,8 @@ const StyledHeader = styled.header`
     img{
     width: 51px;
     height: 51px;
+
+        margin-right: 18px;
 
     background: url(image.png);
     border-radius: 98.5px;  

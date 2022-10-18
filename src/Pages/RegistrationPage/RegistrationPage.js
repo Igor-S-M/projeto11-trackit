@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import logo from "../../assets/img/logo.png"
 
 export default function RegistrationPage() {
 
@@ -28,7 +29,7 @@ export default function RegistrationPage() {
 
     return (
         <StyledScreen>
-            <img src="https://media-exp1.licdn.com/dms/image/C4D05AQFY2f6Ss9gk9A/feedshare-thumbnail_720_1280/0/1660855881675?e=2147483647&v=beta&t=eo1HkoWK6rj68Usavq1K52iDRZfXL20IJfwI3zdvhrE" alt="logo"></img>
+            <img src={logo} alt="logo"></img>
             <Titulo>Trackit</Titulo>
             <Formulario onSubmit={registrationCompleted}>
                 <input required data-identifier="input-email" value={email} type="email" placeholder="email" onChange={e => setEmail(e.target.value)} />
