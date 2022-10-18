@@ -28,16 +28,16 @@ export default function RegistrationPage() {
 
     return (
         <StyledScreen>
-            <img src="https://media-exp1.licdn.com/dms/image/C4D05AQFY2f6Ss9gk9A/feedshare-thumbnail_720_1280/0/1660855881675?e=2147483647&v=beta&t=eo1HkoWK6rj68Usavq1K52iDRZfXL20IJfwI3zdvhrE"></img>
+            <img src="https://media-exp1.licdn.com/dms/image/C4D05AQFY2f6Ss9gk9A/feedshare-thumbnail_720_1280/0/1660855881675?e=2147483647&v=beta&t=eo1HkoWK6rj68Usavq1K52iDRZfXL20IJfwI3zdvhrE" alt="logo"></img>
             <Titulo>Trackit</Titulo>
             <Formulario onSubmit={registrationCompleted}>
-                <input required value={email} type="email" placeholder="email" onChange={e => setEmail(e.target.value)} />
-                <input required value={password} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)} />
-                <input required value={name} type="text" placeholder="nome" onChange={e => setName(e.target.value)} />
-                <input required value={image} type="url" placeholder="foto" onChange={e => setImage(e.target.value)} />
+                <input required data-identifier="input-email" value={email} type="email" placeholder="email" onChange={e => setEmail(e.target.value)} />
+                <input required data-identifier="input-password" value={password} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)} />
+                <input required data-identifier="input-name" value={name} type="text" placeholder="nome" onChange={e => setName(e.target.value)} />
+                <input required data-identifier="input-photo" value={image} type="url" placeholder="foto" onChange={e => setImage(e.target.value)} />
                 <button type="submit">Cadastrar</button>
             </Formulario>
-            <Link to="/"><p>Ja tem uma conta? Faça login</p></Link>
+            <Link to="/"><p data-identifier="back-to-login-action">Ja tem uma conta? Faça login</p></Link>
         </StyledScreen>
     )
 };
@@ -56,7 +56,7 @@ const StyledScreen = styled.main`
 width: 232px;
 height: 17px;
 
-font-family: 'Lexend Deca';
+font-family: 'Lexend Deca', sans-serif;
 font-style: normal;
 font-weight: 400;
 font-size: 13.976px;
@@ -84,7 +84,7 @@ background: #FFFFFF;
 border: 1px solid #D5D5D5;
 border-radius: 5px;
 
-font-family: 'Lexend Deca';
+font-family: 'Lexend Deca', sans-serif;
 font-style: normal;
 font-weight: 400;
 font-size: 19.976px;

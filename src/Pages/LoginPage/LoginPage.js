@@ -25,14 +25,14 @@ export default function LoginPage(params) {
     
     return (
         <StyledScreen>
-            <img src="https://media-exp1.licdn.com/dms/image/C4D05AQFY2f6Ss9gk9A/feedshare-thumbnail_720_1280/0/1660855881675?e=2147483647&v=beta&t=eo1HkoWK6rj68Usavq1K52iDRZfXL20IJfwI3zdvhrE"></img>
+            <img src="https://media-exp1.licdn.com/dms/image/C4D05AQFY2f6Ss9gk9A/feedshare-thumbnail_720_1280/0/1660855881675?e=2147483647&v=beta&t=eo1HkoWK6rj68Usavq1K52iDRZfXL20IJfwI3zdvhrE" alt="logo"></img>
             <Titulo>Trackit</Titulo>
             <Formulario onSubmit={loginCompleted}>
-                <input required value={email} type="email" placeholder="email" onChange={e => setEmail(e.target.value)}/>
-                <input required value={password} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)} />
-                <button type="submit">Entrar</button>
+                <input required data-identifier="input-email" value={email} type="email" placeholder="email" onChange={e => setEmail(e.target.value)}/>
+                <input required data-identifier="input-password" value={password} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)} />
+                <button data-identifier="login-btn" type="submit">Entrar</button>
             </Formulario>
-            <Link to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link>
+            <Link to="/cadastro"><p data-identifier="sign-up-action">Não tem uma conta? Cadastre-se!</p></Link>
         </StyledScreen>
     )
 };
