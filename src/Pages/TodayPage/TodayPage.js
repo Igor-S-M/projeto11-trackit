@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Header from "../../components/Header"
 import Footer from "../../components/Footer"
-import Habit from "./Habit"
+import TodayGoal from "./TodayGoal"
 
 
 export default function TodayPage() {
@@ -16,9 +16,9 @@ export default function TodayPage() {
                 </div>
 
                 <div className="container-habitos">
-                    <Habit />
-                    <Habit />
-                    <Habit />
+                    <TodayGoal />
+                    <TodayGoal />
+                    <TodayGoal />
 
                 </div>
             </main>

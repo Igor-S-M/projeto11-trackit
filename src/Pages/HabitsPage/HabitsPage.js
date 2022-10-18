@@ -1,8 +1,23 @@
+import { useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import CreatingHabit from "./CreatingHabit";
 
 export default function HabitsPage(params) {
+
+    const [showCreatingHabit, setShowCreatingHabit] = useState(false)
+    const [savedHabits, setSaveHabits] = useState([])
+
+    function newHabit() {
+        if (!showCreatingHabit) {
+            setShowCreatingHabit(true)
+        }else{
+            alert("Você já tem um espaço de criação em aberto!")
+        }
+    }
+
+
     return (
         <>
             <Header />
@@ -10,11 +25,14 @@ export default function HabitsPage(params) {
             <StyledMain>
                 <div className="topo">
                     <h1>Meus hábitos</h1>
-                    <button>+</button>
+                    <button onClick={newHabit}>+</button>
                 </div>
 
                 <div className="container">
+
+                    {showCreatingHabit ? <CreatingHabit setShowCreatingHabit={setShowCreatingHabit} /> : null}
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+
                 </div>
 
             </StyledMain>
@@ -26,12 +44,17 @@ export default function HabitsPage(params) {
 
 const StyledMain = styled.main`
 
-margin-top: 86px;
-margin-left: 20px;
-margin-right: 20px;
+min-height: 570px;
+margin-top: 70px;
 
+padding-top: 16px;
+padding-left: 20px;
+padding-right: 20px;
+
+background-color: lightcyan;
 .topo{
 width: 100%;
+
 margin-bottom: 28px;
 
 display: flex;
@@ -78,6 +101,7 @@ color: #ffffff;
 width: 100%;
 
 display: flex;
+flex-direction: column;
 
 p{
 margin: 0px;
