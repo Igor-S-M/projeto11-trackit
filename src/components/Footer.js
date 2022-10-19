@@ -5,7 +5,7 @@ import styled from "styled-components"
 export default function Footer(params) {
     return (
         <StyledFooter>
-            <Link to="/habitos">
+            <Link data-identifier="habit-page-action" to="/habitos">
                 <p>Hábitos</p>
             </Link>
             <Link to="/hoje">
@@ -13,7 +13,7 @@ export default function Footer(params) {
                     <p>hoje</p>
                 </button>
             </Link>
-            <Link to="/historico">
+            <Link data-identifier="historic-page-action" to="/historico">
                 <p>Historico</p>
             </Link>
         </StyledFooter>

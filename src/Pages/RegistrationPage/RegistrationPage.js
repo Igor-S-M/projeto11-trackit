@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -12,17 +13,19 @@ export default function RegistrationPage() {
 
     const navigate = useNavigate()
 
-    function registrationCompleted(event) {
+    function completRegistration(event) {
         event.preventDefault()
 
         const body = {
             email: email,
             password: password,
             name: name,
-            profilePicture: image
+            image: image
         }
 
-        console.log(body)
+        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",body).then((resp)=>console.log(resp.data)).catch(err=>console.log(err.response.data))
+
+        console.log("modelo de body para POST - Fazer Cadastro",body)
 
         navigate("/")
     }
@@ -31,7 +34,7 @@ export default function RegistrationPage() {
         <StyledScreen>
             <img src={logo} alt="logo"></img>
             <Titulo>Trackit</Titulo>
-            <Formulario onSubmit={registrationCompleted}>
+            <Formulario onSubmit={completRegistration}>
                 <input required data-identifier="input-email" value={email} type="email" placeholder="email" onChange={e => setEmail(e.target.value)} />
                 <input required data-identifier="input-password" value={password} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)} />
                 <input required data-identifier="input-name" value={name} type="text" placeholder="nome" onChange={e => setName(e.target.value)} />
@@ -49,25 +52,47 @@ const StyledScreen = styled.main`
     align-items: center;
     
     img{
+        margin-top: 60px;
+
         width:160px ;
         height: 90px;
     }
 
     p{
-width: 232px;
-height: 17px;
+        margin-top: 26px;
 
-font-family: 'Lexend Deca', sans-serif;
+        width: 232px;
+        height: 17px;
+        
+        font-family: 'Lexend Deca', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13.976px;
+        line-height: 17px;
+        text-align: center;
+        text-decoration-line: underline;
+        
+        color: #52B6FF;
+    }
+`
+
+const Titulo = styled.h1`
+width: 180px;
+height: 86.23px;
+
+margin-bottom: 34px;
+
+font-family: 'Playball', cursive;
 font-style: normal;
 font-weight: 400;
-font-size: 13.976px;
-line-height: 17px;
-text-align: center;
-text-decoration-line: underline;
+font-size: 68.982px;
+line-height: 86px;
 
-color: #52B6FF;
-}
-    `
+/* identical to box height */
+text-align: center;
+
+color: #126BA5
+`
 
 const Formulario = styled.form`
     display: flex;
@@ -75,11 +100,13 @@ const Formulario = styled.form`
     justify-content: center;
     align-items: center;
 
-    input{
+input{
 box-sizing: border-box;
 
 width: 303px;
 height: 45px;
+
+margin-bottom: 6px;
 
 background: #FFFFFF;
 border: 1px solid #D5D5D5;
@@ -91,8 +118,7 @@ font-weight: 400;
 font-size: 19.976px;
 line-height: 25px;
 
-//color: #DBDBDB;
-color:red;
+color: #DBDBDB;
 }
 
 button{
@@ -113,20 +139,4 @@ color: #FFFFFF;
 }
     `
 
-const Titulo = styled.h1`
-    width: 180px;
-    height: 86.23px;
-    
-    margin: 0px;
-    
-    font-family: 'Playball', cursive;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 68.982px;
-    line-height: 86px;
-    
-    /* identical to box height */
-    text-align: center;
-    
-    color: #126BA5
-    `
+

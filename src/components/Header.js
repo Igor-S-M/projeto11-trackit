@@ -4,7 +4,7 @@ export default function Header(params) {
     return (
         <StyledHeader>
             <p>Trackit</p>
-            <img src="https://cdn-icons-png.flaticon.com/512/627/627857.png" alt="profile" />
+            <img data-identifier="avatar" src="https://cdn-icons-png.flaticon.com/512/627/627857.png" alt="profile" />
         </StyledHeader>
     )
 };

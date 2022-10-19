@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import CreatingHabit from "./CreatingHabit";
+import CurrentHabits from "./CurrentHabits";
 
 export default function HabitsPage(params) {
 
@@ -25,13 +26,14 @@ export default function HabitsPage(params) {
             <StyledMain>
                 <div className="topo">
                     <h1>Meus hábitos</h1>
-                    <button onClick={newHabit}>+</button>
+                    <button data-identifier="create-habit-btn" onClick={newHabit}>+</button>
                 </div>
 
                 <div className="container">
 
                     {showCreatingHabit ? <CreatingHabit setShowCreatingHabit={setShowCreatingHabit} /> : null}
-                    <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                    <CurrentHabits></CurrentHabits>
+                    <p data-identifier="no-habit-message">Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
 
                 </div>
 
