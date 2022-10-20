@@ -1,11 +1,10 @@
 import styled from "styled-components"
 import { weekday } from "../../constants/constants"
 import { UserContext } from "../../provider/UserContext"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 
 export default function CurrentHabits({data}) {
-
-    console.log(data)    
+    
 
     return (
         <StyledHabit>
@@ -17,7 +16,7 @@ export default function CurrentHabits({data}) {
                 <ion-icon data-identifier="delete-habit-btn" name="trash"></ion-icon>
             </div>
             <div className="week">
-                {Object.entries(weekday).map((i, idx) => <div className={`weekday clicado`} key={idx}>{i[1][0]}</div>)}
+                {weekday.map((i, idx) => <div className={`weekday ${data.days.includes(idx)? "clicado" : null}`} key={idx}>{i[0]}</div>)}
             </div>
 
         </StyledHabit>

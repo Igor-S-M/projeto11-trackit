@@ -42,7 +42,7 @@ export default function CreatingHabit({ setShowCreatingHabit }) {
             <form onSubmit={completeForm}>
                 <input required data-identifier="input-habit-name" value={habitName} placeholder="nome do hábito" onChange={(e) => setHabitName(e.target.value)} />
                 <div className="week">
-                    {Object.entries(weekday).map((i, idx) => <div data-identifier="week-day-btn" className={`weekday ${clicked.includes(i[0]) ? "clicado" : ""}`} key={idx} onClick={() => clickDay(i[0])}>{i[1][0]}</div>)}
+                    {weekday.map((i, idx) => <div data-identifier="week-day-btn" className={`weekday ${clicked.includes(idx) ? "clicado" : ""}`} key={idx} onClick={() => clickDay(idx)}>{i[0]}</div>)}
                 </div>
                 <div className="container-butoes">
                     <h1 data-identifier="cancel-habit-create-btn" onClick={() => setShowCreatingHabit(false)}>Cancelar</h1>
