@@ -1,14 +1,33 @@
-import { useState } from "react";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import { UserContext } from "../../provider/UserContext";
 import CreatingHabit from "./CreatingHabit";
 import CurrentHabits from "./CurrentHabits";
 
 export default function HabitsPage(params) {
 
+    const value = useContext(UserContext)
+
     const [showCreatingHabit, setShowCreatingHabit] = useState(false)
-    const [savedHabits, setSaveHabits] = useState([])
+    const [habitsData, setHabitsData] = useState([])
+
+    useEffect(()=>{
+
+        const config = {headers: { Authorization: `$Bearer ${value.token}` }}
+        
+
+        axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",config)
+        .then(resp => {
+            console.log(resp.data) 
+            setHabitsData(resp.data) //array
+        })
+        .catch(err => {
+            console.log(err.response.data)
+        })
+    },[])
 
     function newHabit() {
         if (!showCreatingHabit) {
@@ -32,8 +51,8 @@ export default function HabitsPage(params) {
                 <div className="container">
 
                     {showCreatingHabit ? <CreatingHabit setShowCreatingHabit={setShowCreatingHabit} /> : null}
-                    <CurrentHabits></CurrentHabits>
-                    <p data-identifier="no-habit-message">Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                    {habitsData !== undefined ? habitsData.map((i,idx) => <CurrentHabits key={idx} data={i}/>) : <p data-identifier="no-habit-message">Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+}
 
                 </div>
 
@@ -48,6 +67,7 @@ const StyledMain = styled.main`
 
 min-height: 570px;
 margin-top: 70px;
+margin-bottom: 70px;
 
 padding-top: 16px;
 padding-left: 20px;

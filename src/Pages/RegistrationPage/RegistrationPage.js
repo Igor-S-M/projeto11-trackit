@@ -23,11 +23,13 @@ export default function RegistrationPage() {
             image: image
         }
 
-        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",body).then((resp)=>console.log(resp.data)).catch(err=>console.log(err.response.data))
+        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body).then((resp) => navigate("/")).catch(err => {
+            console.log(err.response.data)
+            alert("voce não colocou um email valido!")
+        })
 
-        console.log("modelo de body para POST - Fazer Cadastro",body)
+        console.log("modelo de body para POST - Fazer Cadastro", body)
 
-        navigate("/")
     }
 
     return (

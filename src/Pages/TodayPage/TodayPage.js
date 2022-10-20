@@ -2,9 +2,13 @@ import styled from "styled-components"
 import Header from "../../components/Header"
 import Footer from "../../components/Footer"
 import TodayGoal from "./TodayGoal"
+import { useContext } from "react"
+import { UserContext } from "../../provider/UserContext"
 
 
 export default function TodayPage() {
+    
+
     return (
         <StyledScreen>
             <Header />

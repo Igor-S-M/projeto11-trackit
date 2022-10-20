@@ -5,20 +5,31 @@ import TodayPage from "./Pages/TodayPage/TodayPage"
 import HabitsPage from "./Pages/HabitsPage/HabitsPage"
 import HistoryPage from "./Pages/HistoryPage/HistoryPage"
 import { createGlobalStyle } from "styled-components";
+import { UserContext } from "./provider/UserContext";
+import { useState } from "react";
 
 export default function App() {
-    return(
-        <BrowserRouter>
-        <GlobalStyle/>
-        <Routes>
-            <Route path="/" element={<LoginPage/>}/>
-            <Route path="/cadastro" element={<RegistrationPage/>}/>
-            <Route path="/habitos" element={<HabitsPage/>}/>
-            <Route path="/hoje" element={<TodayPage/>}/>
-            <Route path="/historico" element={<HistoryPage/>}/>
-        </Routes>
-        </BrowserRouter>
-    )
+
+	const [userData, setUserData] = useState({})
+
+
+	return (
+		<BrowserRouter>
+			<GlobalStyle />
+			<Routes>
+				<Route path="/cadastro" element={<RegistrationPage />} />
+				<Route path="/" element={<LoginPage setUserData={setUserData} />} />
+			</Routes>
+			<UserContext.Provider value={userData}>
+				<Routes>
+					<Route path="/habitos" element={<HabitsPage />} />
+					<Route path="/hoje" element={<TodayPage />} />
+					<Route path="/historico" element={<HistoryPage />} />
+				</Routes>
+			</UserContext.Provider>
+
+		</BrowserRouter>
+	)
 };
 
 

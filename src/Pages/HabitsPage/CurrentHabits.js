@@ -1,12 +1,19 @@
 import styled from "styled-components"
 import { weekday } from "../../constants/constants"
+import { UserContext } from "../../provider/UserContext"
+import { useContext } from "react"
 
-export default function CurrentHabits(params) {
+export default function CurrentHabits({data}) {
+
+    console.log(data)    
+
     return (
         <StyledHabit>
 
             <div className="principal">
-                <h1 data-identifier="habit-name" >Título do Hábito</h1>
+                <h1 data-identifier="habit-name" >
+                    {data.name}
+                </h1>
                 <ion-icon data-identifier="delete-habit-btn" name="trash"></ion-icon>
             </div>
             <div className="week">

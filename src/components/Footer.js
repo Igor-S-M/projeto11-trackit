@@ -21,7 +21,7 @@ export default function Footer(params) {
 };
 
 const StyledFooter = styled.footer`
-position: absolute;
+position: fixed;
 width: 100%;
 height: 70px;
 left: 0px;

@@ -1,10 +1,14 @@
-import { useState } from "react"
+import axios from "axios"
+import { useState, useContext } from "react"
 import styled from "styled-components"
-import { weekday } from "../../constants/constants"
+import { BASE_URL, weekday } from "../../constants/constants"
+import { UserContext } from "../../provider/UserContext"
 
 export default function CreatingHabit({ setShowCreatingHabit }) {
 
-    const[name,setName] = useState("")
+    const value = useContext(UserContext)
+
+    const [habitName, setHabitName] = useState("")
     const [clicked, setClicked] = useState([])
 
     function clickDay(i) {
@@ -16,18 +20,27 @@ export default function CreatingHabit({ setShowCreatingHabit }) {
         }
     }
 
-    function completeForm(e){
+    function completeForm(e) {
         e.preventDefault()
 
-        const body = {name:name,days: clicked}
-        console.log("modelo de body para POST - Criar Hábito",body)
+        const config = {headers: { Authorization: `$Bearer ${value.token}` }}
+        const body = {
+            name: habitName,
+            days: clicked
+        }
+        console.log("modelo de body para POST - Criar Hábito", body)
+
+
+        axios.post(`${BASE_URL}habits`, body,config)
+        .then(resp => console.log(resp.data))
+        .catch((err)=>console.log(err.response))
     }
 
 
     return (
         <StyledHabit>
             <form onSubmit={completeForm}>
-                <input required data-identifier="input-habit-name" value={name} placeholder="nome do hábito" onChange={(e)=>setName(e.target.value)} />
+                <input required data-identifier="input-habit-name" value={habitName} placeholder="nome do hábito" onChange={(e) => setHabitName(e.target.value)} />
                 <div className="week">
                     {Object.entries(weekday).map((i, idx) => <div data-identifier="week-day-btn" className={`weekday ${clicked.includes(i[0]) ? "clicado" : ""}`} key={idx} onClick={() => clickDay(i[0])}>{i[1][0]}</div>)}
                 </div>

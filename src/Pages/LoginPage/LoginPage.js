@@ -6,9 +6,9 @@ import logo from "../../assets/img/logo.png"
 
 
 
-export default function LoginPage(params) {
+export default function LoginPage({setUserData}) {
 
-    const [email, setEmail] = useState("")
+    const [userEmail, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
     const navigate = useNavigate()
@@ -17,14 +17,20 @@ export default function LoginPage(params) {
         event.preventDefault()
 
         const body = {
-            email: email,
+            email: userEmail,
             password: password,
 
         }
 
-        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",body).then((resp)=>console.log(resp.data)).catch((err)=>err.response.data)
+        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body)
+            .then((resp) => {
+                navigate("/hoje")
+                setUserData(resp.data)
+            }).catch((err) => {
+                console.log(err.response)
+                alert("email ou senha incorreto!")
+            })
 
-        navigate("/hoje")
 
     }
 
@@ -33,7 +39,7 @@ export default function LoginPage(params) {
             <img src={logo} alt="logo"></img>
             <Titulo>Trackit</Titulo>
             <Formulario onSubmit={completLogin}>
-                <input required data-identifier="input-email" value={email} type="email" placeholder="email" onChange={e => setEmail(e.target.value)} />
+                <input required data-identifier="input-email" value={userEmail} type="email" placeholder="email" onChange={e => setEmail(e.target.value)} />
                 <input required data-identifier="input-password" value={password} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)} />
                 <button data-identifier="login-btn" type="submit">Entrar</button>
             </Formulario>

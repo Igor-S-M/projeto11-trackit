@@ -1,10 +1,16 @@
 import styled from "styled-components"
+import { UserContext } from "../provider/UserContext"
+import { useContext } from "react"
 
 export default function Header(params) {
+
+    const value = useContext(UserContext)
+
+
     return (
         <StyledHeader>
             <p>Trackit</p>
-            <img data-identifier="avatar" src="https://cdn-icons-png.flaticon.com/512/627/627857.png" alt="profile" />
+            <img data-identifier="avatar" src={value.image} alt="profile" />
         </StyledHeader>
     )
 };
