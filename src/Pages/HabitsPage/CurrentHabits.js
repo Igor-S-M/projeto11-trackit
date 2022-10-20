@@ -1,10 +1,26 @@
 import styled from "styled-components"
-import { weekday } from "../../constants/constants"
+import { BASE_URL, weekday } from "../../constants/constants"
 import { UserContext } from "../../provider/UserContext"
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
+import axios from "axios"
 
-export default function CurrentHabits({data}) {
-    
+export default function CurrentHabits({ numberOfHabits, setNumberOfHabits, data }) {
+
+
+    const value = useContext(UserContext)
+
+    function deleteHabit(id) {
+
+        const config = { headers: { Authorization: `$Bearer ${value.token}` } }
+
+        axios.delete(`${BASE_URL}habits/${id}`, config)
+            .then(resp => {
+                console.log(resp.data)
+                setNumberOfHabits(numberOfHabits - 1)
+            })
+            .catch(err => console.log(err.response.data))
+    }
+
 
     return (
         <StyledHabit>
@@ -13,10 +29,10 @@ export default function CurrentHabits({data}) {
                 <h1 data-identifier="habit-name" >
                     {data.name}
                 </h1>
-                <ion-icon data-identifier="delete-habit-btn" name="trash"></ion-icon>
+                <ion-icon onClick={() => deleteHabit(data.id)} data-identifier="delete-habit-btn" name="trash"></ion-icon>
             </div>
             <div className="week">
-                {weekday.map((i, idx) => <div className={`weekday ${data.days.includes(idx)? "clicado" : null}`} key={idx}>{i[0]}</div>)}
+                {weekday.map((i, idx) => <div className={`weekday ${data.days.includes(idx) ? "clicado" : null}`} key={idx}>{i[0]}</div>)}
             </div>
 
         </StyledHabit>

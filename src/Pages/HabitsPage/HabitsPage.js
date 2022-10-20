@@ -13,26 +13,27 @@ export default function HabitsPage(params) {
 
     const [showCreatingHabit, setShowCreatingHabit] = useState(false)
     const [habitsData, setHabitsData] = useState([])
+    const [numberOfHabits, setNumberOfHabits] = useState(0)
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        const config = {headers: { Authorization: `$Bearer ${value.token}` }}
-        
+        const config = { headers: { Authorization: `$Bearer ${value.token}` } }
 
-        axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",config)
-        .then(resp => {
-            console.log(resp.data) 
-            setHabitsData(resp.data) //array
-        })
-        .catch(err => {
-            console.log(err.response.data)
-        })
-    },[])
+        axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
+            .then(resp => {
+                console.log(resp.data)
+                setHabitsData(resp.data) //array
+                setNumberOfHabits(resp.data.length)
+            })
+            .catch(err => {
+                console.log(err.response.data)
+            })
+    }, [numberOfHabits])
 
     function newHabit() {
         if (!showCreatingHabit) {
             setShowCreatingHabit(true)
-        }else{
+        } else {
             alert("Você já tem um espaço de criação em aberto!")
         }
     }
@@ -50,9 +51,17 @@ export default function HabitsPage(params) {
 
                 <div className="container">
 
-                    {showCreatingHabit ? <CreatingHabit setShowCreatingHabit={setShowCreatingHabit} /> : null}
-                    {habitsData !== undefined ? habitsData.map((i,idx) => <CurrentHabits key={idx} data={i}/>) : <p data-identifier="no-habit-message">Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
-}
+                    {showCreatingHabit ? <CreatingHabit
+                        setShowCreatingHabit={setShowCreatingHabit}
+                        numberOfHabits={numberOfHabits} setNumberOfHabits={setNumberOfHabits} />
+                        : null}
+
+                    {numberOfHabits !== 0 ?
+                        habitsData.map((i, idx) => <CurrentHabits
+                            key={idx} data={i}
+                            numberOfHabits={numberOfHabits} setNumberOfHabits={setNumberOfHabits} />)
+                        : <p data-identifier="no-habit-message">Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                    }
 
                 </div>
 

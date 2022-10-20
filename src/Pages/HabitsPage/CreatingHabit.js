@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { BASE_URL, weekday } from "../../constants/constants"
 import { UserContext } from "../../provider/UserContext"
 
-export default function CreatingHabit({ setShowCreatingHabit }) {
+export default function CreatingHabit({ numberOfHabits, setNumberOfHabits, setShowCreatingHabit }) {
 
     const value = useContext(UserContext)
 
@@ -23,7 +23,7 @@ export default function CreatingHabit({ setShowCreatingHabit }) {
     function completeForm(e) {
         e.preventDefault()
 
-        const config = {headers: { Authorization: `$Bearer ${value.token}` }}
+        const config = { headers: { Authorization: `$Bearer ${value.token}` } }
         const body = {
             name: habitName,
             days: clicked
@@ -31,9 +31,14 @@ export default function CreatingHabit({ setShowCreatingHabit }) {
         console.log("modelo de body para POST - Criar Hábito", body)
 
 
-        axios.post(`${BASE_URL}habits`, body,config)
-        .then(resp => console.log(resp.data))
-        .catch((err)=>console.log(err.response))
+        axios.post(`${BASE_URL}habits`, body, config)
+            .then(resp => {
+                console.log(resp.data)
+                setNumberOfHabits(numberOfHabits + 1)
+                setShowCreatingHabit(false)
+            })
+            .catch((err) => console.log(err.response))
+
     }
 
 
