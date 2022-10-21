@@ -1,14 +1,60 @@
 import styled from "styled-components";
+import { AiFillCheckSquare } from "react-icons/ai"
+import { useContext, useState } from "react";
+import { UserContext } from "../../provider/UserContext";
+import axios from "axios";
 
-export default function TodayGoal(params) {
+
+export default function TodayGoal({ data, setHabitsConter, habitsConter }) {
+
+    const value = useContext(UserContext)
+    const [isClicked, setIsClicked] = useState(false)
+
+    function uncheckHabit(id) {
+
+        const config = { headers: { Authorization: `$Bearer ${value.token}` } }
+
+        axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, {}, config)
+            .then(resp => {
+                setIsClicked(false)
+                setHabitsConter(habitsConter - 1)
+            })
+            .catch(err => { console.log(err.response.data) })
+    }
+
+    function checkHabit(id) {
+        const config = { headers: { "Authorization": `$Bearer ${value.token}` } }
+
+        axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, {}, config)
+            .then(resp => {
+
+                setIsClicked(true)
+                setHabitsConter(habitsConter + 1)
+            })
+            .catch(err => { console.log(err.response.data) })
+    }
+
+    function completeTodayHabit(id) {
+
+
+        if (isClicked) {
+            uncheckHabit(id)
+        } else {
+            checkHabit(id)
+        }
+
+    }
     return (
         <StyledHabit>
             <div className="infos">
-                <h1>Titulo do habito</h1>
-                <p>Sequencia atual: X dias</p>
-                <p>Seu recorde: Y dias</p>
+                <h1>{data.name}</h1>
+                <p>Sequencia atual: {data.currentSequence} dias</p>
+                <p>Seu recorde: {data.highestSequence} dias</p>
             </div>
-            <div className="check-box"></div>
+            <div className={`check-box ${isClicked ? "clicado" : null}`}
+                onClick={() => completeTodayHabit(data.id)}>
+                <AiFillCheckSquare />
+            </div>
         </StyledHabit>
     )
 };
@@ -64,13 +110,22 @@ const StyledHabit = styled.div`
         }
     }
 
-    .check-box{
+    .check-box svg{
         width: 70px;
         height: 70px;
 
         margin: 14px;
-        
+        color: #EBEBEB;
+        border: 1px solid #E7E7E7;
+        border-radius: 5px;
+    }
 
-        background-color: lightgreen;
+    .check-box.clicado svg{
+        width: 70px;
+        height: 70px;
+
+        margin: 14px;
+        color: #8FC549;
+        border-radius: 5px;
     }
 `

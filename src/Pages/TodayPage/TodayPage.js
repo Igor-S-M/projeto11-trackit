@@ -2,11 +2,31 @@ import styled from "styled-components"
 import Header from "../../components/Header"
 import Footer from "../../components/Footer"
 import TodayGoal from "./TodayGoal"
-
-
+import dayjs from "dayjs"
+import { weekday } from "../../constants/constants"
+import { useContext, useEffect, useState } from "react"
+import { UserContext } from "../../provider/UserContext"
+import axios from "axios"
 
 export default function TodayPage() {
-    
+
+    const value = useContext(UserContext)
+    const [todayHabits, setTodayHabits] = useState([])
+    const [habitsConter, setHabitsConter] = useState(0)
+
+    useEffect(() => {
+
+        const config = { headers: { Authorization: `$Bearer ${value.token}` } }
+
+        axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
+            .then(resp => {
+                setTodayHabits(resp.data)
+                console.log(resp.data)
+            })
+            .catch(err => { console.log(err.response.data) })
+
+    }, [habitsConter])
+
 
     return (
         <StyledScreen>
@@ -14,15 +34,13 @@ export default function TodayPage() {
 
             <main>
                 <div className="container-info-gerais">
-                    <h1>Segunda, 17/05</h1>
-                    <p>Nenhum hábito concluído ainda</p>
+                    <h1>{weekday[dayjs().day()]}, {dayjs().date()}/{dayjs().month() + 1}</h1>
+                    {habitsConter !== 0 ? <p className="fez-algo"> {habitsConter / todayHabits.length * 100} % dos hábitos concluídos</p> : <p>Nenhum hábito concluído ainda</p>}
                 </div>
 
                 <div className="container-habitos">
-                    <TodayGoal />
-                    <TodayGoal />
-                    <TodayGoal />
-
+                    {todayHabits !== undefined && todayHabits.map((i, idx) => <TodayGoal data={i} key={idx}
+                        habitsConter={habitsConter} setHabitsConter={setHabitsConter} />)}
                 </div>
             </main>
 
@@ -73,6 +91,10 @@ main{
             line-height: 22px;
 
             color: #BABABA;
+        }
+
+        .fez-algo{
+            color: #8FC549;
         }
     }
 

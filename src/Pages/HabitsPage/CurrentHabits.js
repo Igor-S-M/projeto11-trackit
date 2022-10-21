@@ -3,6 +3,7 @@ import { BASE_URL, weekday } from "../../constants/constants"
 import { UserContext } from "../../provider/UserContext"
 import { useContext } from "react"
 import axios from "axios"
+import { BsTrash } from "react-icons/bs";
 
 export default function CurrentHabits({ numberOfHabits, setNumberOfHabits, data }) {
 
@@ -29,7 +30,7 @@ export default function CurrentHabits({ numberOfHabits, setNumberOfHabits, data 
                 <h1 data-identifier="habit-name" >
                     {data.name}
                 </h1>
-                <ion-icon onClick={() => deleteHabit(data.id)} data-identifier="delete-habit-btn" name="trash"></ion-icon>
+                <BsTrash onClick={() => deleteHabit(data.id)} data-identifier="delete-habit-btn" name="trash"></BsTrash>
             </div>
             <div className="week">
                 {weekday.map((i, idx) => <div className={`weekday ${data.days.includes(idx) ? "clicado" : null}`} key={idx}>{i[0]}</div>)}
@@ -65,10 +66,10 @@ line-height: 25px;
 color: #666666;
 }
 
-ion-icon{
-    font-size:28px;
-    color: darkgray;
-    margin: 10px;
+svg{
+    font-size:20px;
+    color: black;
+    margin: 14px;
 }
 }
 
