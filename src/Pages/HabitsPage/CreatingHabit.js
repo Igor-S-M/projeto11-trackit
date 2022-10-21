@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { BASE_URL, weekday } from "../../constants/constants"
 import { UserContext } from "../../provider/UserContext"
 
-export default function CreatingHabit({ numberOfHabits, setNumberOfHabits, setShowCreatingHabit }) {
+export default function CreatingHabit({setShowCreatingHabit }) {
 
     const value = useContext(UserContext)
 
@@ -34,7 +34,6 @@ export default function CreatingHabit({ numberOfHabits, setNumberOfHabits, setSh
         axios.post(`${BASE_URL}habits`, body, config)
             .then(resp => {
                 console.log(resp.data)
-                setNumberOfHabits(numberOfHabits + 1)
                 setShowCreatingHabit(false)
             })
             .catch((err) => console.log(err.response))

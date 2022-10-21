@@ -7,8 +7,10 @@ import axios from "axios";
 
 export default function TodayGoal({ data, setHabitsConter, habitsConter }) {
 
+
+
     const value = useContext(UserContext)
-    const [isClicked, setIsClicked] = useState(false)
+    const [isClicked, setIsClicked] = useState(data.done)
 
     function uncheckHabit(id) {
 
@@ -16,10 +18,10 @@ export default function TodayGoal({ data, setHabitsConter, habitsConter }) {
 
         axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, {}, config)
             .then(resp => {
-                setIsClicked(false)
                 setHabitsConter(habitsConter - 1)
             })
             .catch(err => { console.log(err.response.data) })
+
     }
 
     function checkHabit(id) {
@@ -28,7 +30,7 @@ export default function TodayGoal({ data, setHabitsConter, habitsConter }) {
         axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, {}, config)
             .then(resp => {
 
-                setIsClicked(true)
+
                 setHabitsConter(habitsConter + 1)
             })
             .catch(err => { console.log(err.response.data) })
@@ -39,8 +41,10 @@ export default function TodayGoal({ data, setHabitsConter, habitsConter }) {
 
         if (isClicked) {
             uncheckHabit(id)
+            setIsClicked(false)
         } else {
             checkHabit(id)
+            setIsClicked(true)
         }
 
     }

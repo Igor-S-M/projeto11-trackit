@@ -5,7 +5,7 @@ import { useContext } from "react"
 import axios from "axios"
 import { BsTrash } from "react-icons/bs";
 
-export default function CurrentHabits({ numberOfHabits, setNumberOfHabits, data }) {
+export default function CurrentHabits({  data }) {
 
 
     const value = useContext(UserContext)
@@ -17,7 +17,6 @@ export default function CurrentHabits({ numberOfHabits, setNumberOfHabits, data 
         axios.delete(`${BASE_URL}habits/${id}`, config)
             .then(resp => {
                 console.log(resp.data)
-                setNumberOfHabits(numberOfHabits - 1)
             })
             .catch(err => console.log(err.response.data))
     }

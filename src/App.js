@@ -6,6 +6,7 @@ import HabitsPage from "./Pages/HabitsPage/HabitsPage"
 import HistoryPage from "./Pages/HistoryPage/HistoryPage"
 import { createGlobalStyle } from "styled-components";
 import { UserContext } from "./provider/UserContext";
+import { ProgressContext } from "./provider/ProgressContext";
 import { useState } from "react";
 
 export default function App() {
@@ -21,11 +22,14 @@ export default function App() {
 				<Route path="/" element={<LoginPage setUserData={setUserData} />} />
 			</Routes>
 			<UserContext.Provider value={userData}>
-				<Routes>
-					<Route path="/habitos" element={<HabitsPage />} />
-					<Route path="/hoje" element={<TodayPage />} />
-					<Route path="/historico" element={<HistoryPage />} />
-				</Routes>
+				<ProgressContext.Provider value={userData}>
+					<Routes>
+						<Route path="/habitos" element={<HabitsPage />} />
+						<Route path="/hoje" element={<TodayPage />} />
+						<Route path="/historico" element={<HistoryPage />} />
+					</Routes>
+				</ProgressContext.Provider>
+
 			</UserContext.Provider>
 
 		</BrowserRouter>

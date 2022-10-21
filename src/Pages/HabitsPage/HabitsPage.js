@@ -13,7 +13,6 @@ export default function HabitsPage(params) {
 
     const [showCreatingHabit, setShowCreatingHabit] = useState(false)
     const [habitsData, setHabitsData] = useState([])
-    const [numberOfHabits, setNumberOfHabits] = useState(0)
 
     useEffect(() => {
 
@@ -23,12 +22,12 @@ export default function HabitsPage(params) {
             .then(resp => {
                 console.log(resp.data)
                 setHabitsData(resp.data) //array
-                setNumberOfHabits(resp.data.length)
+
             })
             .catch(err => {
                 console.log(err.response.data)
             })
-    }, [numberOfHabits])
+    },[] )
 
     function newHabit() {
         if (!showCreatingHabit) {
@@ -53,13 +52,13 @@ export default function HabitsPage(params) {
 
                     {showCreatingHabit ? <CreatingHabit
                         setShowCreatingHabit={setShowCreatingHabit}
-                        numberOfHabits={numberOfHabits} setNumberOfHabits={setNumberOfHabits} />
+                        />
                         : null}
 
-                    {numberOfHabits !== 0 ?
+                    {habitsData.length !== 0 ?
                         habitsData.map((i, idx) => <CurrentHabits
                             key={idx} data={i}
-                            numberOfHabits={numberOfHabits} setNumberOfHabits={setNumberOfHabits} />)
+                             />)
                         : <p data-identifier="no-habit-message">Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                     }
 

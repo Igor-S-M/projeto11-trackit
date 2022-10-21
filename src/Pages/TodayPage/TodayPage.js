@@ -14,6 +14,7 @@ export default function TodayPage() {
     const [todayHabits, setTodayHabits] = useState([])
     const [habitsConter, setHabitsConter] = useState(0)
 
+
     useEffect(() => {
 
         const config = { headers: { Authorization: `$Bearer ${value.token}` } }
@@ -21,6 +22,7 @@ export default function TodayPage() {
         axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
             .then(resp => {
                 setTodayHabits(resp.data)
+                setHabitsConter(resp.data.filter(i => i.done).length)
                 console.log(resp.data)
             })
             .catch(err => { console.log(err.response.data) })
@@ -35,7 +37,7 @@ export default function TodayPage() {
             <main>
                 <div className="container-info-gerais">
                     <h1>{weekday[dayjs().day()]}, {dayjs().date()}/{dayjs().month() + 1}</h1>
-                    {habitsConter !== 0 ? <p className="fez-algo"> {habitsConter / todayHabits.length * 100} % dos hábitos concluídos</p> : <p>Nenhum hábito concluído ainda</p>}
+                    {habitsConter !== 0 ? <p className="fez-algo"> {Math.round(habitsConter / todayHabits.length * 100)} % dos hábitos concluídos</p> : <p>Nenhum hábito concluído ainda</p>}
                 </div>
 
                 <div className="container-habitos">
