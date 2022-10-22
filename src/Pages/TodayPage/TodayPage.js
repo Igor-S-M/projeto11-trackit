@@ -10,88 +10,80 @@ import axios from "axios"
 
 export default function TodayPage() {
 
-    const value = useContext(UserContext)
+    const userData = useContext(UserContext)
     const [todayHabits, setTodayHabits] = useState([])
-    const [habitsConter, setHabitsConter] = useState(0)
+    //contador de habitos feitos
+    const [habitsCounter, setHabitsCounter] = useState(0)
 
 
     useEffect(() => {
 
-        const config = { headers: { Authorization: `$Bearer ${value.token}` } }
+        const config = { headers: { Authorization: `$Bearer ${userData.token}` } }
 
         axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
             .then(resp => {
                 setTodayHabits(resp.data)
-                setHabitsConter(resp.data.filter(i => i.done).length)
+                setHabitsCounter(resp.data.filter(i => i.done).length)
                 console.log(resp.data)
             })
             .catch(err => { console.log(err.response.data) })
 
-    }, [habitsConter])
+    }, [habitsCounter])
 
 
     return (
-        <StyledScreen>
+        <>
             <Header />
 
-            <main>
+            <StyledScreen>
                 <div className="container-info-gerais">
                     <h1>{weekday[dayjs().day()]}, {dayjs().date()}/{dayjs().month() + 1}</h1>
-                    {habitsConter !== 0 ? <p className="fez-algo"> {Math.round(habitsConter / todayHabits.length * 100)} % dos hábitos concluídos</p> : <p>Nenhum hábito concluído ainda</p>}
+                    {habitsCounter !== 0 ? <p className="fez-algo"> {Math.round(habitsCounter / todayHabits.length * 100)} % dos hábitos concluídos</p> : <p>Nenhum hábito concluído ainda</p>}
                 </div>
 
                 <div className="container-habitos">
                     {todayHabits !== undefined && todayHabits.map((i, idx) => <TodayGoal data={i} key={idx}
-                        habitsConter={habitsConter} setHabitsConter={setHabitsConter} />)}
+                        habitsCounter={habitsCounter} setHabitsCounter={setHabitsCounter} />)}
                 </div>
-            </main>
+            </StyledScreen>
 
             <Footer />
-        </StyledScreen>
+        </>
     )
 };
 
 
-const StyledScreen = styled.div`
+const StyledScreen = styled.main`
 
-background-color: lightcyan;
+    background-color: lightcyan;
 
-main{
-    margin: 70px 0px;
-    min-height: 570px;
+    height: 84vh;
+
+    margin-top: 70px;
+    margin-bottom: 70px;
+    padding-top: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
 
     .container-info-gerais{
         display: flex;
         flex-direction: column;
-
         
-        margin-left: 16px;
-        
-        h1{
-            margin: 0px;
-            margin-top: 28px;
-            height: 29px;
-
-                    
+        h1{                              
             font-family: 'Lexend Deca', sans-serif;
             font-style: normal;
             font-weight: 400;
             font-size: 22.976px;
-            line-height: 29px;
-                    
+            line-height: 29px;         
             color: #126BA5;
         }
 
         p{
-            margin: 0px;
-            height: 22px;
-
             font-family: 'Lexend Deca', sans-serif;
             font-style: normal;
             font-weight: 400;
             font-size: 17.976px;
             line-height: 22px;
-
             color: #BABABA;
         }
 
@@ -107,6 +99,5 @@ main{
 
         }
 
-}
 
 `

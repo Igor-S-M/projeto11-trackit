@@ -42,7 +42,6 @@ left: 0px;
 bottom: 0px;
 
 background: #FFFFFF;   
-
 display: flex;
 justify-content: center;
 align-items: center;

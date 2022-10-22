@@ -8,11 +8,11 @@ import { BsTrash } from "react-icons/bs";
 export default function CurrentHabits({  data }) {
 
 
-    const value = useContext(UserContext)
+    const userData = useContext(UserContext)
 
     function deleteHabit(id) {
 
-        const config = { headers: { Authorization: `$Bearer ${value.token}` } }
+        const config = { headers: { Authorization: `$Bearer ${userData.token}` } }
 
         axios.delete(`${BASE_URL}habits/${id}`, config)
             .then(resp => {

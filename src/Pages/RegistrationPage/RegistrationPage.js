@@ -23,12 +23,12 @@ export default function RegistrationPage() {
             image: image
         }
 
-        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body).then((resp) => navigate("/")).catch(err => {
+        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body)
+        .then(() => navigate("/"))
+        .catch(err => {
             console.log(err.response.data)
             alert("preencha os campos de acordo!")
         })
-
-        console.log("modelo de body para POST - Fazer Cadastro", body)
 
     }
 

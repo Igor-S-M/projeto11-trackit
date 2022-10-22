@@ -5,49 +5,39 @@ import { UserContext } from "../../provider/UserContext";
 import axios from "axios";
 
 
-export default function TodayGoal({ data, setHabitsConter, habitsConter }) {
+export default function TodayGoal({ data, setHabitsCounter, habitsCounter }) {
 
 
 
-    const value = useContext(UserContext)
+    const userData = useContext(UserContext)
     const [isClicked, setIsClicked] = useState(data.done)
 
-    function uncheckHabit(id) {
 
-        const config = { headers: { Authorization: `$Bearer ${value.token}` } }
+    function doneUndone(id, flag){
+        const config = { headers: { Authorization: `$Bearer ${userData.token}` } }
 
-        axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, {}, config)
-            .then(resp => {
-                setHabitsConter(habitsConter - 1)
-            })
-            .catch(err => { console.log(err.response.data) })
-
-    }
-
-    function checkHabit(id) {
-        const config = { headers: { "Authorization": `$Bearer ${value.token}` } }
-
-        axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, {}, config)
-            .then(resp => {
-
-
-                setHabitsConter(habitsConter + 1)
+        axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/${flag?"check":"uncheck"}`, {}, config)
+            .then(() => {
+                changeHabitsCounter(flag)
             })
             .catch(err => { console.log(err.response.data) })
     }
 
-    function completeTodayHabit(id) {
+    function changeHabitsCounter(flag){
+        if(flag){
+            setHabitsCounter(habitsCounter + 1)
+        }else{
+            setHabitsCounter(habitsCounter - 1)
 
-
-        if (isClicked) {
-            uncheckHabit(id)
-            setIsClicked(false)
-        } else {
-            checkHabit(id)
-            setIsClicked(true)
         }
-
     }
+
+    function clickTodayHabit(id) {
+
+        setIsClicked(!isClicked)
+        doneUndone(id,!isClicked)
+    }
+    
     return (
         <StyledHabit>
             <div className="infos">
@@ -56,7 +46,7 @@ export default function TodayGoal({ data, setHabitsConter, habitsConter }) {
                 <p>Seu recorde: {data.highestSequence} dias</p>
             </div>
             <div className={`check-box ${isClicked ? "clicado" : null}`}
-                onClick={() => completeTodayHabit(data.id)}>
+                onClick={() => clickTodayHabit(data.id)}>
                 <AiFillCheckSquare />
             </div>
         </StyledHabit>
@@ -67,7 +57,7 @@ export default function TodayGoal({ data, setHabitsConter, habitsConter }) {
 
 const StyledHabit = styled.div`
     box-sizing: border-box;
-    
+
     width: 94%;
     height: 94px;
 
@@ -81,21 +71,19 @@ const StyledHabit = styled.div`
     justify-content: space-between;
     align-items: center;
 
-
     .infos{
 
         height: 80px;
         display: flex;
         flex-direction: column;
-
-    
+        
         h1{
         font-family: 'Lexend Deca', sans-serif;
         font-style: normal;
         font-weight: 400;
         font-size: 19.976px;
         line-height: 25px;
-       
+
         color: #666666;
 
         margin: 6px 0px;
@@ -109,7 +97,7 @@ const StyledHabit = styled.div`
         line-height: 16px;
 
         color: #666666;
-        
+
         margin: 0px;
         }
     }
@@ -119,16 +107,13 @@ const StyledHabit = styled.div`
         height: 70px;
 
         margin: 14px;
+        
         color: #EBEBEB;
         border: 1px solid #E7E7E7;
         border-radius: 5px;
     }
 
     .check-box.clicado svg{
-        width: 70px;
-        height: 70px;
-
-        margin: 14px;
         color: #8FC549;
         border-radius: 5px;
     }

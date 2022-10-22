@@ -6,31 +6,29 @@ import { UserContext } from "../../provider/UserContext"
 
 export default function CreatingHabit({setShowCreatingHabit }) {
 
-    const value = useContext(UserContext)
+    const userData = useContext(UserContext)
 
     const [habitName, setHabitName] = useState("")
-    const [clicked, setClicked] = useState([])
+    const [habitDays, setHabitDays] = useState([])
 
     function clickDay(i) {
-        if (clicked.includes(i)) {
-            const novoEstado = clicked.filter(el => el !== i)
-            setClicked(novoEstado)
+        if (habitDays.includes(i)) {
+            const novoEstado = habitDays.filter(el => el !== i)
+            setHabitDays(novoEstado)
         } else {
-            setClicked([...clicked, i])
+            setHabitDays([...habitDays, i])
         }
     }
 
     function completeForm(e) {
         e.preventDefault()
 
-        const config = { headers: { Authorization: `$Bearer ${value.token}` } }
+        const config = { headers: { Authorization: `$Bearer ${userData.token}` } }
         const body = {
             name: habitName,
-            days: clicked
+            days: habitDays
         }
-        console.log("modelo de body para POST - Criar Hábito", body)
-
-
+        
         axios.post(`${BASE_URL}habits`, body, config)
             .then(resp => {
                 console.log(resp.data)
@@ -46,7 +44,7 @@ export default function CreatingHabit({setShowCreatingHabit }) {
             <form onSubmit={completeForm}>
                 <input required data-identifier="input-habit-name" value={habitName} placeholder="nome do hábito" onChange={(e) => setHabitName(e.target.value)} />
                 <div className="week">
-                    {weekday.map((i, idx) => <div data-identifier="week-day-btn" className={`weekday ${clicked.includes(idx) ? "clicado" : ""}`} key={idx} onClick={() => clickDay(idx)}>{i[0]}</div>)}
+                    {weekday.map((i, idx) => <div data-identifier="week-day-btn" className={`weekday ${habitDays.includes(idx) ? "clicado" : ""}`} key={idx} onClick={() => clickDay(idx)}>{i[0]}</div>)}
                 </div>
                 <div className="container-butoes">
                     <h1 data-identifier="cancel-habit-create-btn" onClick={() => setShowCreatingHabit(false)}>Cancelar</h1>

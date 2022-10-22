@@ -9,20 +9,18 @@ import CurrentHabits from "./CurrentHabits";
 
 export default function HabitsPage(params) {
 
-    const value = useContext(UserContext)
+    const userData = useContext(UserContext)
 
     const [showCreatingHabit, setShowCreatingHabit] = useState(false)
     const [habitsData, setHabitsData] = useState([])
 
     useEffect(() => {
 
-        const config = { headers: { Authorization: `$Bearer ${value.token}` } }
+        const config = { headers: { Authorization: `$Bearer ${userData.token}` } }
 
         axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
             .then(resp => {
-                console.log(resp.data)
                 setHabitsData(resp.data) //array
-
             })
             .catch(err => {
                 console.log(err.response.data)
@@ -30,7 +28,7 @@ export default function HabitsPage(params) {
     },[] )
 
     function newHabit() {
-        if (!showCreatingHabit) {
+        if (showCreatingHabit === false) {
             setShowCreatingHabit(true)
         } else {
             alert("Você já tem um espaço de criação em aberto!")
@@ -73,7 +71,7 @@ export default function HabitsPage(params) {
 
 const StyledMain = styled.main`
 
-min-height: 570px;
+height: 84vh;
 margin-top: 70px;
 margin-bottom: 70px;
 
