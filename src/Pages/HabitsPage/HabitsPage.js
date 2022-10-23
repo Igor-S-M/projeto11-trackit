@@ -25,7 +25,7 @@ export default function HabitsPage() {
             .catch(err => {
                 console.log(err.response.data)
             })
-    },[] )
+    },[habitsData] )
 
     function newHabit() {
         if (showCreatingHabit === false) {
