@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar"
-
+import { useContext } from "react"
+import { ProgressContext, TodayHabitsContext } from "../provider/ProgressContext"
 
 
 export default function Footer() {
+
+    const userCounter = useContext(ProgressContext)
+    const userTodayHabits = useContext(TodayHabitsContext)
+
     return (
         <StyledFooter>
             <Link data-identifier="habit-page-action" to="/habitos">
@@ -13,8 +18,8 @@ export default function Footer() {
             <Link to="/hoje">
                 <div className="container-hoje">
 
-                    <CircularProgressbar value={33}
-                        text={`${"97"}%`}
+                    <CircularProgressbar value={Math.round(userCounter / userTodayHabits.length * 100)}
+                        text={`${Math.round(userCounter / userTodayHabits.length * 100)}%`}
                         background
                         backgroundPadding={6}
                         styles={buildStyles({

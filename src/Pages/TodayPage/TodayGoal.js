@@ -5,7 +5,7 @@ import { UserContext } from "../../provider/UserContext";
 import axios from "axios";
 
 
-export default function TodayGoal({ data, setHabitsCounter, habitsCounter }) {
+export default function TodayGoal({ data, setHabitsCounter, userCounter }) {
 
 
 
@@ -25,9 +25,9 @@ export default function TodayGoal({ data, setHabitsCounter, habitsCounter }) {
 
     function changeHabitsCounter(flag){
         if(flag){
-            setHabitsCounter(habitsCounter + 1)
+            setHabitsCounter(userCounter + 1)
         }else{
-            setHabitsCounter(habitsCounter - 1)
+            setHabitsCounter(userCounter - 1)
 
         }
     }

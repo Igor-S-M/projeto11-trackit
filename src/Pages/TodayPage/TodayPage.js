@@ -7,13 +7,14 @@ import { weekday } from "../../constants/constants"
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../provider/UserContext"
 import axios from "axios"
+import { ProgressContext, TodayHabitsContext } from "../../provider/ProgressContext"
 
-export default function TodayPage() {
+export default function TodayPage({ setHabitsCounter, setTodayHabits}) {
 
     const userData = useContext(UserContext)
-    const [todayHabits, setTodayHabits] = useState([])
-    //contador de habitos feitos
-    const [habitsCounter, setHabitsCounter] = useState(0)
+    const userCounter = useContext(ProgressContext)
+    const userTodayHabits = useContext(TodayHabitsContext)
+    
 
 
     useEffect(() => {
@@ -28,7 +29,7 @@ export default function TodayPage() {
             })
             .catch(err => { console.log(err.response.data) })
 
-    }, [habitsCounter])
+    }, [userCounter])
 
 
     return (
@@ -38,12 +39,12 @@ export default function TodayPage() {
             <StyledScreen>
                 <div className="container-info-gerais">
                     <h1>{weekday[dayjs().day()]}, {dayjs().date()}/{dayjs().month() + 1}</h1>
-                    {habitsCounter !== 0 ? <p className="fez-algo"> {Math.round(habitsCounter / todayHabits.length * 100)} % dos hábitos concluídos</p> : <p>Nenhum hábito concluído ainda</p>}
+                    {userCounter !== 0 ? <p className="fez-algo"> {Math.round(userCounter / userTodayHabits.length * 100)} % dos hábitos concluídos</p> : <p>Nenhum hábito concluído ainda</p>}
                 </div>
 
                 <div className="container-habitos">
-                    {todayHabits !== undefined && todayHabits.map((i, idx) => <TodayGoal data={i} key={idx}
-                        habitsCounter={habitsCounter} setHabitsCounter={setHabitsCounter} />)}
+                    {userTodayHabits !== undefined && userTodayHabits.map((i, idx) => <TodayGoal data={i} key={idx}
+                        userCounter={userCounter} setHabitsCounter={setHabitsCounter} />)}
                 </div>
             </StyledScreen>
 

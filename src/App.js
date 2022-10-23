@@ -7,11 +7,13 @@ import HistoryPage from "./Pages/HistoryPage/HistoryPage"
 import { createGlobalStyle } from "styled-components";
 import { UserContext } from "./provider/UserContext";
 import { useState } from "react";
+import { ProgressContext, TodayHabitsContext } from "./provider/ProgressContext";
 
 export default function App() {
 
 	const [userData, setUserData] = useState({})
-
+	const [habitsCounter, setHabitsCounter] = useState(0)
+	const [todayHabits, setTodayHabits] = useState([])
 
 	return (
 		<BrowserRouter>
@@ -21,12 +23,17 @@ export default function App() {
 				<Route path="/" element={<LoginPage setUserData={setUserData} />} />
 			</Routes>
 			<UserContext.Provider value={userData}>
-					<Routes>
-						<Route path="/habitos" element={<HabitsPage />} />
-						<Route path="/hoje" element={<TodayPage />} />
-						<Route path="/historico" element={<HistoryPage />} />
-					</Routes>
+				<ProgressContext.Provider value={habitsCounter}>
+					<TodayHabitsContext.Provider value={todayHabits}>
 
+						<Routes>
+							<Route path="/habitos" element={<HabitsPage />} />
+							<Route path="/hoje" element={<TodayPage setHabitsCounter={setHabitsCounter} todayHabits={todayHabits} setTodayHabits={setTodayHabits} />} />
+							<Route path="/historico" element={<HistoryPage />} />
+						</Routes>
+
+					</TodayHabitsContext.Provider>
+				</ProgressContext.Provider>
 			</UserContext.Provider>
 
 		</BrowserRouter>

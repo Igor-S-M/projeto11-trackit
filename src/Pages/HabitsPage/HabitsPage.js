@@ -7,7 +7,7 @@ import { UserContext } from "../../provider/UserContext";
 import CreatingHabit from "./CreatingHabit";
 import CurrentHabits from "./CurrentHabits";
 
-export default function HabitsPage(params) {
+export default function HabitsPage() {
 
     const userData = useContext(UserContext)
 
