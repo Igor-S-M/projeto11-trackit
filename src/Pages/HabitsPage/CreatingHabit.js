@@ -33,6 +33,8 @@ export default function CreatingHabit({setShowCreatingHabit }) {
             .then(resp => {
                 console.log(resp.data)
                 setShowCreatingHabit(false)
+                setHabitName("")
+                setHabitDays([])
             })
             .catch((err) => console.log(err.response))
 

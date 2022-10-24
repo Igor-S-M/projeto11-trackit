@@ -9,12 +9,12 @@ import { UserContext } from "../../provider/UserContext"
 import axios from "axios"
 import { ProgressContext, TodayHabitsContext } from "../../provider/ProgressContext"
 
-export default function TodayPage({ setHabitsCounter, setTodayHabits}) {
+export default function TodayPage({ setHabitsCounter, setTodayHabits }) {
 
     const userData = useContext(UserContext)
     const userCounter = useContext(ProgressContext)
     const userTodayHabits = useContext(TodayHabitsContext)
-    
+
 
 
     useEffect(() => {
@@ -30,6 +30,18 @@ export default function TodayPage({ setHabitsCounter, setTodayHabits}) {
             .catch(err => { console.log(err.response.data) })
 
     }, [userCounter])
+
+    if (userCounter === 0) {
+        return (
+            <>
+                <Header />
+                <LoadingPage>
+                    <p>Carregando</p>
+                </LoadingPage>
+                <Footer />
+            </>
+        )
+    }
 
 
     return (
@@ -99,6 +111,11 @@ const StyledScreen = styled.main`
         align-items: center;
 
         }
+`
 
-
+const LoadingPage = styled(StyledScreen)`
+p{
+    font-size: 40px;
+    margin: 80px 0px;
+}
 `

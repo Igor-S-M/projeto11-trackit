@@ -1,14 +1,22 @@
 import styled from "styled-components"
 import { BASE_URL, weekday } from "../../constants/constants"
 import { UserContext } from "../../provider/UserContext"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import axios from "axios"
 import { BsTrash } from "react-icons/bs";
 
-export default function CurrentHabits({  data }) {
+export default function CurrentHabits({ data }) {
 
 
     const userData = useContext(UserContext)
+    const [deleteBox, setDeleteBox] = useState(false)
+
+    function confirmDel(id,name){
+
+        if (window.confirm(`voce quer mesmo apagar o habito "${name}"`) === true){
+            deleteHabit(id)
+        }
+    }
 
     function deleteHabit(id) {
 
@@ -23,19 +31,22 @@ export default function CurrentHabits({  data }) {
 
 
     return (
-        <StyledHabit>
+        <>
+            <StyledHabit>
 
-            <div className="principal">
-                <h1 data-identifier="habit-name" >
-                    {data.name}
-                </h1>
-                <BsTrash onClick={() => deleteHabit(data.id)} data-identifier="delete-habit-btn" name="trash"></BsTrash>
-            </div>
-            <div className="week">
-                {weekday.map((i, idx) => <div className={`weekday ${data.days.includes(idx) ? "clicado" : null}`} key={idx}>{i[0]}</div>)}
-            </div>
+                <div className="principal">
+                    <h1 data-identifier="habit-name" >
+                        {data.name}
+                    </h1>
+                    <BsTrash onClick={() => confirmDel(data.id, data.name)} data-identifier="delete-habit-btn" name="trash"></BsTrash>
+                </div>
+                <div className="week">
+                    {weekday.map((i, idx) => <div className={`weekday ${data.days.includes(idx) ? "clicado" : null}`} key={idx}>{i[0]}</div>)}
+                </div>
 
-        </StyledHabit>
+            </StyledHabit>
+            
+        </>
     )
 };
 
@@ -110,7 +121,4 @@ color: #FFFFFF;
 background: #CFCFCF;
 border: 1px solid #CFCFCF;    
 }
-
-
-
 `
