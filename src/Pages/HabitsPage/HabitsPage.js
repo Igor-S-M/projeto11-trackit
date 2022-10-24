@@ -25,7 +25,7 @@ export default function HabitsPage() {
             .catch(err => {
                 console.log(err.response.data)
             })
-    },[habitsData] )
+    }, [habitsData])
 
     function newHabit() {
         if (showCreatingHabit === false) {
@@ -50,13 +50,13 @@ export default function HabitsPage() {
 
                     {showCreatingHabit ? <CreatingHabit
                         setShowCreatingHabit={setShowCreatingHabit}
-                        />
+                    />
                         : null}
 
                     {habitsData.length !== 0 ?
                         habitsData.map((i, idx) => <CurrentHabits
                             key={idx} data={i}
-                             />)
+                        />)
                         : <p data-identifier="no-habit-message">Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                     }
 

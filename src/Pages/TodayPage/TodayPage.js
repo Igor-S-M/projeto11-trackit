@@ -31,17 +31,6 @@ export default function TodayPage({ setHabitsCounter, setTodayHabits }) {
 
     }, [userCounter])
 
-    if (userCounter === 0) {
-        return (
-            <>
-                <Header />
-                <LoadingPage>
-                    <p>Carregando</p>
-                </LoadingPage>
-                <Footer />
-            </>
-        )
-    }
 
 
     return (
@@ -111,11 +100,4 @@ const StyledScreen = styled.main`
         align-items: center;
 
         }
-`
-
-const LoadingPage = styled(StyledScreen)`
-p{
-    font-size: 40px;
-    margin: 80px 0px;
-}
 `

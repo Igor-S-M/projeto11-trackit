@@ -4,12 +4,14 @@ import styled from "styled-components"
 import { BASE_URL, weekday } from "../../constants/constants"
 import { UserContext } from "../../provider/UserContext"
 
-export default function CreatingHabit({setShowCreatingHabit }) {
+export default function CreatingHabit({ setShowCreatingHabit }) {
 
     const userData = useContext(UserContext)
 
     const [habitName, setHabitName] = useState("")
     const [habitDays, setHabitDays] = useState([])
+
+    const [loadingHabit, setLoadingHabit] = useState(false)
 
     function clickDay(i) {
         if (habitDays.includes(i)) {
@@ -22,21 +24,26 @@ export default function CreatingHabit({setShowCreatingHabit }) {
 
     function completeForm(e) {
         e.preventDefault()
+        setLoadingHabit(true)
 
         const config = { headers: { Authorization: `$Bearer ${userData.token}` } }
         const body = {
             name: habitName,
             days: habitDays
         }
-        
+
         axios.post(`${BASE_URL}habits`, body, config)
             .then(resp => {
                 console.log(resp.data)
                 setShowCreatingHabit(false)
                 setHabitName("")
                 setHabitDays([])
+                setLoadingHabit(false)
             })
-            .catch((err) => console.log(err.response))
+            .catch((err) => {
+                console.log(err.response)
+                setLoadingHabit(false)
+            })
 
     }
 
@@ -44,9 +51,9 @@ export default function CreatingHabit({setShowCreatingHabit }) {
     return (
         <StyledHabit>
             <form onSubmit={completeForm}>
-                <input required data-identifier="input-habit-name" value={habitName} placeholder="nome do hábito" onChange={(e) => setHabitName(e.target.value)} />
+                {!loadingHabit ? <input required data-identifier="input-habit-name" name={habitName} placeholder="nome do hábito" onChange={(e) => setHabitName(e.target.value)} /> : <input disabled placeholder="nome do hábito" />}
                 <div className="week">
-                    {weekday.map((i, idx) => <div data-identifier="week-day-btn" className={`weekday ${habitDays.includes(idx) ? "clicado" : ""}`} key={idx} onClick={() => clickDay(idx)}>{i[0]}</div>)}
+                    {weekday.map((i, idx) => <div data-identifier="week-day-btn" className={`weekday ${habitDays.includes(idx) ? "clicado" : ""}`} key={idx} onClick={!loadingHabit ? () => clickDay(idx) : null}>{i[0]}</div>)}
                 </div>
                 <div className="container-butoes">
                     <h1 data-identifier="cancel-habit-create-btn" onClick={() => setShowCreatingHabit(false)}>Cancelar</h1>

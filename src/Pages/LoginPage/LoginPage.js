@@ -34,6 +34,7 @@ export default function LoginPage({setUserData}) {
             }).catch((err) => {
                 console.log(err.response)
                 alert("email ou senha incorreto!")
+                setLoginLoad(false)
             })
 
 

@@ -34,11 +34,12 @@ export default function RegistrationPage() {
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body)
             .then(() => {
                 navigate("/")
-                setLoadingState(true)
+                setLoadingState(false)
             })
             .catch(err => {
                 console.log(err.response.data)
                 alert("preencha os campos de acordo!")
+                setLoadingState(false)
             })
 
     }
