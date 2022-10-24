@@ -45,8 +45,8 @@ export default function LoginPage({setUserData}) {
             <img src={logo} alt="logo"></img>
             <Titulo>Trackit</Titulo>
             <Formulario onSubmit={completLogin}>
-                {!loginLoad? <input required data-identifier="input-email" value={userEmail} type="email" placeholder="email" onChange={e => setEmail(e.target.value)} />        : <input disabled placeholder="email"/> }  
-                {!loginLoad? <input required data-identifier="input-password" value={password} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)} />: <input disabled placeholder="senha"/>}
+                {!loginLoad? <input required data-identifier="input-email" value={userEmail} type="email" placeholder="email" onChange={e => setEmail(e.target.value)} />        : <input disabled  placeholder="email"/> }  
+                {!loginLoad? <input required data-identifier="input-password" value={password} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)} />: <input disabled  placeholder="senha"/>}
                 {!loginLoad? <button data-identifier="login-btn" type="submit">Entrar</button> :<button disabled> <ThreeDots
                     height="45"
                     width="80"
@@ -134,6 +134,7 @@ color: #DBDBDB;
 background: #FFFFFF;
 border: 1px solid #D5D5D5;
 border-radius: 5px;
+
 }
 
 button{
