@@ -1,47 +1,68 @@
 import axios from "axios";
 import { useState } from "react"
+import { ThreeDots } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/img/logo.png"
 
 export default function RegistrationPage() {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [name, setName] = useState("")
-    const [image, setImage] = useState("")
+    const [formsData, setFormsData] = useState({ email: "", password: "", name: "", image: "" })
+    const [loadingState, setLoadingState] = useState(false)
+
 
     const navigate = useNavigate()
+
+    function handleForms(e) {
+        setFormsData({
+            ...formsData, [e.target.name]: e.target.value,
+        })
+    }
 
     function completRegistration(event) {
         event.preventDefault()
 
+        setLoadingState(true)
+
         const body = {
-            email: email,
-            password: password,
-            name: name,
-            image: image
+            email: formsData.email,
+            password: formsData.password,
+            name: formsData.name,
+            image: formsData.image
         }
 
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body)
-        .then(() => navigate("/"))
-        .catch(err => {
-            console.log(err.response.data)
-            alert("preencha os campos de acordo!")
-        })
+            .then(() => {
+                navigate("/")
+                setLoadingState(true)
+            })
+            .catch(err => {
+                console.log(err.response.data)
+                alert("preencha os campos de acordo!")
+            })
 
     }
+
 
     return (
         <StyledScreen>
             <img src={logo} alt="logo"></img>
             <Titulo>Trackit</Titulo>
             <Formulario onSubmit={completRegistration}>
-                <input required data-identifier="input-email" value={email} type="email" placeholder="email" onChange={e => setEmail(e.target.value)} />
-                <input required data-identifier="input-password" value={password} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)} />
-                <input required data-identifier="input-name" value={name} type="text" placeholder="nome" onChange={e => setName(e.target.value)} />
-                <input required data-identifier="input-photo" value={image} type="url" placeholder="foto" onChange={e => setImage(e.target.value)} />
-                <button type="submit">Cadastrar</button>
+                {!loadingState ? <input required data-identifier="input-email" name={formsData.email} type="email" placeholder="email" onChange={handleForms} /> : <input disabled placeholder="email" />}
+                {!loadingState ? <input required data-identifier="input-password" name={formsData.password} type="password" placeholder="senha" onChange={handleForms} /> : <input disabled placeholder="senha" />}
+                {!loadingState ? <input required data-identifier="input-name" name={formsData.name} type="text" placeholder="nome" onChange={handleForms} /> : <input disabled placeholder="nome" />}
+                {!loadingState ? <input required data-identifier="input-photo" name={formsData.image} type="url" placeholder="foto" onChange={handleForms} /> : <input disabled placeholder="foto" />}
+                {!loadingState ? <button type="submit">Cadastrar</button> : <button disabled> <ThreeDots
+                    height="45"
+                    width="80"
+                    radius="9"
+                    color="#ffffff"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClassName=""
+                    visible={true} />
+                    </button>}
             </Formulario>
             <Link to="/"><p data-identifier="back-to-login-action">Ja tem uma conta? Faça login</p></Link>
         </StyledScreen>
@@ -138,6 +159,10 @@ line-height: 26px;
 text-align: center;
 
 color: #FFFFFF;
+
+display: flex;
+justify-content: center;
+align-items: center;
 }
     `
 

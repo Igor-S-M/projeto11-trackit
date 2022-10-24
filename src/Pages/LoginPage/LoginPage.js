@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/img/logo.png"
@@ -11,10 +12,13 @@ export default function LoginPage({setUserData}) {
     const [userEmail, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
+    const [loginLoad, setLoginLoad] = useState(false)
+
     const navigate = useNavigate()
 
     function completLogin(event) {
         event.preventDefault()
+        setLoginLoad(true)
 
         const body = {
             email: userEmail,
@@ -24,6 +28,7 @@ export default function LoginPage({setUserData}) {
 
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body)
             .then((resp) => {
+                setLoginLoad(false)
                 navigate("/hoje")
                 setUserData(resp.data)
             }).catch((err) => {
@@ -39,9 +44,18 @@ export default function LoginPage({setUserData}) {
             <img src={logo} alt="logo"></img>
             <Titulo>Trackit</Titulo>
             <Formulario onSubmit={completLogin}>
-                <input required data-identifier="input-email" value={userEmail} type="email" placeholder="email" onChange={e => setEmail(e.target.value)} />
-                <input required data-identifier="input-password" value={password} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)} />
-                <button data-identifier="login-btn" type="submit">Entrar</button>
+                {!loginLoad? <input required data-identifier="input-email" value={userEmail} type="email" placeholder="email" onChange={e => setEmail(e.target.value)} />        : <input disabled placeholder="email"/> }  
+                {!loginLoad? <input required data-identifier="input-password" value={password} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)} />: <input disabled placeholder="senha"/>}
+                {!loginLoad? <button data-identifier="login-btn" type="submit">Entrar</button> :<button disabled> <ThreeDots
+                    height="45"
+                    width="80"
+                    radius="9"
+                    color="#ffffff"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClassName=""
+                    visible={true} />
+                    </button>}        
             </Formulario>
             <Link to="/cadastro"><p data-identifier="sign-up-action">Não tem uma conta? Cadastre-se!</p></Link>
         </StyledScreen>
@@ -136,5 +150,9 @@ line-height: 26px;
 text-align: center;
 
 color: #FFFFFF;
+
+display: flex;
+justify-content: center;
+align-items: center;
 }
 `

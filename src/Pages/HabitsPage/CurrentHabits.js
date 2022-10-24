@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { BASE_URL, weekday } from "../../constants/constants"
 import { UserContext } from "../../provider/UserContext"
-import { useContext, useState } from "react"
+import { useContext} from "react"
 import axios from "axios"
 import { BsTrash } from "react-icons/bs";
 
@@ -9,7 +9,6 @@ export default function CurrentHabits({ data }) {
 
 
     const userData = useContext(UserContext)
-    const [deleteBox, setDeleteBox] = useState(false)
 
     function confirmDel(id,name){
 
