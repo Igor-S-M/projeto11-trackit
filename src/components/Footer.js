@@ -18,7 +18,7 @@ export default function Footer() {
             <Link to="/hoje">
                 <div className="container-hoje">
 
-                    <CircularProgressbar value={Math.round(userCounter / userTodayHabits.length * 100)}
+                    <CircularProgressbar value={userTodayHabits.length !== 0 ? Math.round(userCounter / userTodayHabits.length * 100) : 0}
                         text={`${Math.round(userCounter / userTodayHabits.length * 100)}%`}
                         background
                         backgroundPadding={6}

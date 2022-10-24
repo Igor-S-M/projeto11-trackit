@@ -7,17 +7,18 @@ import logo from "../../assets/img/logo.png"
 
 export default function RegistrationPage() {
 
-    const [formsData, setFormsData] = useState({ email: "", password: "", name: "", image: "" })
+    
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [name, setName] = useState("")
+    const [image, setImage] = useState("")
+
     const [loadingState, setLoadingState] = useState(false)
 
 
     const navigate = useNavigate()
 
-    function handleForms(e) {
-        setFormsData({
-            ...formsData, [e.target.name]: e.target.value,
-        })
-    }
+
 
     function completRegistration(event) {
         event.preventDefault()
@@ -25,10 +26,10 @@ export default function RegistrationPage() {
         setLoadingState(true)
 
         const body = {
-            email: formsData.email,
-            password: formsData.password,
-            name: formsData.name,
-            image: formsData.image
+            email: email,
+            password: password,
+            name: name,
+            image: image
         }
 
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body)
@@ -50,11 +51,11 @@ export default function RegistrationPage() {
             <img src={logo} alt="logo"></img>
             <Titulo>Trackit</Titulo>
             <Formulario onSubmit={completRegistration}>
-                {!loadingState ? <input required data-identifier="input-email" name={formsData.email} type="email" placeholder="email" onChange={handleForms} /> : <input disabled placeholder="email" />}
-                {!loadingState ? <input required data-identifier="input-password" name={formsData.password} type="password" placeholder="senha" onChange={handleForms} /> : <input disabled placeholder="senha" />}
-                {!loadingState ? <input required data-identifier="input-name" name={formsData.name} type="text" placeholder="nome" onChange={handleForms} /> : <input disabled placeholder="nome" />}
-                {!loadingState ? <input required data-identifier="input-photo" name={formsData.image} type="url" placeholder="foto" onChange={handleForms} /> : <input disabled placeholder="foto" />}
-                {!loadingState ? <button type="submit">Cadastrar</button> : <button disabled> <ThreeDots
+                <input disabled={loadingState} required data-identifier="input-email" value={email} type="email" placeholder="email" onChange={e => setEmail(e.target.value)} />
+                <input disabled={loadingState} required data-identifier="input-password" value={password} type="password" placeholder="senha" onChange={e => setPassword(e.target.value)} />
+                <input disabled={loadingState} required data-identifier="input-name" value={name} type="text" placeholder="nome" onChange={e => setName(e.target.value)} />
+                <input disabled={loadingState} required data-identifier="input-photo" value={image} type="url" placeholder="foto" onChange={e => setImage(e.target.value)} />
+                <button disabled={loadingState} type="submit">{!loadingState ? "Cadastrar" : <ThreeDots
                     height="45"
                     width="80"
                     radius="9"
@@ -62,8 +63,8 @@ export default function RegistrationPage() {
                     ariaLabel="three-dots-loading"
                     wrapperStyle={{}}
                     wrapperClassName=""
-                    visible={true} />
-                    </button>}
+                    visible={true} />}
+                </button>
             </Formulario>
             <Link to="/"><p data-identifier="back-to-login-action">Ja tem uma conta? Faça login</p></Link>
         </StyledScreen>

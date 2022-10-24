@@ -9,14 +9,14 @@ import CurrentHabits from "./CurrentHabits";
 
 export default function HabitsPage() {
 
-    const userData = useContext(UserContext)
+    const {userData} = useContext(UserContext)
 
     const [showCreatingHabit, setShowCreatingHabit] = useState(false)
     const [habitsData, setHabitsData] = useState([])
 
     useEffect(() => {
 
-        const config = { headers: { Authorization: `$Bearer ${userData.token}` } }
+        const config = { headers: { Authorization: `Bearer ${userData.token}` } }
 
         axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
             .then(resp => {

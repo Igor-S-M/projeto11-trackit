@@ -11,7 +11,7 @@ import { ProgressContext, TodayHabitsContext } from "../../provider/ProgressCont
 
 export default function TodayPage({ setHabitsCounter, setTodayHabits }) {
 
-    const userData = useContext(UserContext)
+    const {userData} = useContext(UserContext)
     const userCounter = useContext(ProgressContext)
     const userTodayHabits = useContext(TodayHabitsContext)
 
@@ -19,7 +19,7 @@ export default function TodayPage({ setHabitsCounter, setTodayHabits }) {
 
     useEffect(() => {
 
-        const config = { headers: { Authorization: `$Bearer ${userData.token}` } }
+        const config = { headers: { Authorization: `Bearer ${userData.token}` } }
 
         axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
             .then(resp => {
@@ -31,6 +31,19 @@ export default function TodayPage({ setHabitsCounter, setTodayHabits }) {
 
     }, [userCounter])
 
+    if (userCounter === null) {
+        return (
+            <>
+                <Header />
+                <LoadingPage>
+                    <p>Carregando
+                    </p>
+                </LoadingPage>
+                <Footer />
+            </>
+        )
+    }
+
 
 
     return (
@@ -40,7 +53,9 @@ export default function TodayPage({ setHabitsCounter, setTodayHabits }) {
             <StyledScreen>
                 <div className="container-info-gerais">
                     <h1>{weekday[dayjs().day()]}, {dayjs().date()}/{dayjs().month() + 1}</h1>
-                    {userCounter !== 0 ? <p className="fez-algo"> {Math.round(userCounter / userTodayHabits.length * 100)} % dos hábitos concluídos</p> : <p>Nenhum hábito concluído ainda</p>}
+                    {userCounter !== 0 ?
+                        <p className="fez-algo"> {Math.round(userCounter / userTodayHabits.length * 100)} % dos hábitos concluídos</p> :
+                        <p>Nenhum hábito concluído ainda</p>}
                 </div>
 
                 <div className="container-habitos">
@@ -100,4 +115,24 @@ const StyledScreen = styled.main`
         align-items: center;
 
         }
+`
+
+const LoadingPage = styled.div`
+ background-color: lightcyan;
+
+height: 84vh;
+
+margin-top: 70px;
+margin-bottom: 70px;
+padding-top: 16px;
+padding-left: 20px;
+padding-right: 20px;
+
+display: flex;
+justify-content: center;
+align-items: center;
+
+p{
+    font-size: 40px;
+}
 `

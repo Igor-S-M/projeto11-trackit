@@ -4,13 +4,13 @@ import { useContext } from "react"
 
 export default function Header(params) {
 
-    const value = useContext(UserContext)
+    const {userData} = useContext(UserContext)
 
 
     return (
         <StyledHeader>
             <p>Trackit</p>
-            <img data-identifier="avatar" src={value.image} alt="profile" />
+            <img data-identifier="avatar" src={userData.image} alt="profile" />
         </StyledHeader>
     )
 };

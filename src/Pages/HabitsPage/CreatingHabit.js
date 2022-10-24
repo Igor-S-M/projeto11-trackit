@@ -6,7 +6,7 @@ import { UserContext } from "../../provider/UserContext"
 
 export default function CreatingHabit({ setShowCreatingHabit }) {
 
-    const userData = useContext(UserContext)
+    const {userData} = useContext(UserContext)
 
     const [habitName, setHabitName] = useState("")
     const [habitDays, setHabitDays] = useState([])
@@ -51,7 +51,7 @@ export default function CreatingHabit({ setShowCreatingHabit }) {
     return (
         <StyledHabit>
             <form onSubmit={completeForm}>
-                {!loadingHabit ? <input required data-identifier="input-habit-name" name={habitName} placeholder="nome do hábito" onChange={(e) => setHabitName(e.target.value)} /> : <input disabled placeholder="nome do hábito" />}
+                 <input disabled={loadingHabit} required data-identifier="input-habit-name" name={habitName} placeholder="nome do hábito" onChange={(e) => setHabitName(e.target.value)} /> 
                 <div className="week">
                     {weekday.map((i, idx) => <div data-identifier="week-day-btn" className={`weekday ${habitDays.includes(idx) ? "clicado" : ""}`} key={idx} onClick={!loadingHabit ? () => clickDay(idx) : null}>{i[0]}</div>)}
                 </div>

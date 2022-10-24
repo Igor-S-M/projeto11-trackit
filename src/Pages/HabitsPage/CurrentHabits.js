@@ -8,11 +8,11 @@ import { BsTrash } from "react-icons/bs";
 export default function CurrentHabits({ data }) {
 
 
-    const userData = useContext(UserContext)
+    const {userData} = useContext(UserContext)
 
     function confirmDel(id,name){
 
-        if (window.confirm(`voce quer mesmo apagar o habito "${name}"`) === true){
+        if (window.confirm(`voce quer mesmo apagar o habito "${name}" ?`) === true){
             deleteHabit(id)
         }
     }

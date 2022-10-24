@@ -9,15 +9,16 @@ export default function TodayGoal({ data, setHabitsCounter, userCounter }) {
 
 
 
-    const userData = useContext(UserContext)
+    const {userData} = useContext(UserContext)
     const [isClicked, setIsClicked] = useState(data.done)
 
 
-    function doneUndone(id, flag){
+    function clickTodayHabit(id, flag){
         const config = { headers: { Authorization: `$Bearer ${userData.token}` } }
 
         axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/${flag?"check":"uncheck"}`, {}, config)
             .then(() => {
+                setIsClicked(!isClicked)
                 changeHabitsCounter(flag)
             })
             .catch(err => { console.log(err.response.data) })
@@ -32,21 +33,16 @@ export default function TodayGoal({ data, setHabitsCounter, userCounter }) {
         }
     }
 
-    function clickTodayHabit(id) {
-
-        setIsClicked(!isClicked)
-        doneUndone(id,!isClicked)
-    }
     
     return (
         <StyledHabit>
             <div className="infos">
                 <h1>{data.name}</h1>
-                <p>Sequencia atual: {data.currentSequence} dias</p>
-                <p>Seu recorde: {data.highestSequence} dias</p>
+                <p className={`${isClicked ? "text-clicked" : null}`}>Sequencia atual: {data.currentSequence} dias</p>
+                <p className={`${data.currentSequence === data.highestSequence && data.currentSequence !== 0 ? "text-clicked" : null}`}>Seu recorde: {data.highestSequence} dias</p>
             </div>
             <div className={`check-box ${isClicked ? "clicado" : null}`}
-                onClick={() => clickTodayHabit(data.id)}>
+                onClick={() => clickTodayHabit(data.id,!isClicked)}>
                 <AiFillCheckSquare />
             </div>
         </StyledHabit>
@@ -100,6 +96,10 @@ const StyledHabit = styled.div`
 
         margin: 0px;
         }
+
+        .text-clicked{
+        color: #8FC549;
+    }
     }
 
     .check-box svg{
@@ -117,4 +117,7 @@ const StyledHabit = styled.div`
         color: #8FC549;
         border-radius: 5px;
     }
+
+
+
 `
